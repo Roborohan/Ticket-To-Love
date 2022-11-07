@@ -52,6 +52,7 @@ nav{
 @media screen and (max-width: 1024px){
   .nav-links{
     width: 60%;
+    position: fixed;
   }
 }
 
@@ -68,7 +69,7 @@ nav{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50%;
+    width: 100%;
     transform: translateX(100%);
     transition: transform 0.5s ease-in;
   }
