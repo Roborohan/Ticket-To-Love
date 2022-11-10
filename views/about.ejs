@@ -7,22 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz@8..144&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>TicketToLove</title>
 </head>
 <body>
-    <div>
-        <form action="/logout?_method=DELETE" method="POST">
-            <button class="logoutButton" type="submit">Logout</button>
-        </form>
-    </div>
     <nav>
         <div class="logo">
             <h4>Ticket To Love</h4>
         </div>
         <ul class="nav-links">
-            <li><a href="/">Home</a></li>
+            <li><a href="/"">Home</a></li>
             <li><a href="/signup">Sign Up</a></li>
             <li><a href="/signin">Sign In</a></li>
             <li><a href="/about">About</a></li>
@@ -34,11 +29,6 @@
         </div>
     </nav>
     <div id="imgcontainer"></div>
-    <div class="welcomeText">
-        <h1>Hello <%= name %></h1>
-    </div>
-    <div class="homeText">
-        <h1>Find your Ticket To Love Today!</h1>
     </div>
     <script src="../navbar.js"></script>
 </body>
