@@ -28,7 +28,36 @@
             <div class="line3"></div>
         </div>
     </nav>
-    <div id="imgcontainer"></div>
+    <div id="imgcontainer"></div></div>
+    <div class="flex-parent jc-center">
+        <button type="submit" class="buttonStyle" id="signInShow">Sign In</button>
+        <div id="signin-modal">
+            <div class="modal">
+                <div class="top-form">
+                    <div class="close-modal">
+                        &#10006;
+                    </div>
+                </div>
+                <div class="signin-form">
+                    <h2>Sign In</h2>
+                    <form action="">
+                        <input type="text" class="form-control" placeholder="Email" required>
+                        <input type="password" class="form-control" placeholder="Password" required>
+                        <button type="button" class="buttonStyle">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                $('#signInShow').click(function(){
+                    $('#signin-modal').fadeIn().css("display", "flex");
+                });
+                $('.close-modal').click(function(){
+                    $('#signin-modal').fadeOut();
+                });
+            });
+        </script>
     </div>
     <script src="app.js"></script>
 </body>

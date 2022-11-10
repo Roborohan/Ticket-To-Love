@@ -18,9 +18,9 @@
         </div>
         <ul class="nav-links">
             <li><a href="#" onclick="document.location='index.html'">Home</a></li>
+            <li><a href="#" onclick="document.location='signup.html'">Sign Up</a></li>
+            <li><a href="#" onclick="document.location='signin.html'">Sign In</a></li>
             <li><a href="#" onclick="document.location='about.html'">About</a></li>
-            <li><a href="#" onclick="document.location='safety.html'">Safety</a></li>
-            <li><a href="#" onclick="document.location='info.html'">Info</a></li>
         </ul>
         <div class="burger">
             <div class="line1"></div>
@@ -29,63 +29,8 @@
         </div>
     </nav>
     <div id="imgcontainer"></div>
-    <div class="flex-parent jc-center">
-        <button type="submit" class="buttonStyle" id="signInShow">Sign In</button>
-        <div id="signin-modal">
-            <div class="modal">
-                <div class="top-form">
-                    <div class="close-modal">
-                        &#10006;
-                    </div>
-                </div>
-                <div class="signin-form">
-                    <h2>Sign In</h2>
-                    <form action="">
-                        <input type="text" class="form-control" placeholder="Email" required>
-                        <input type="password" class="form-control" placeholder="Password" required>
-                        <button type="button" class="buttonStyle">Sign In</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(function(){
-                $('#signInShow').click(function(){
-                    $('#signin-modal').fadeIn().css("display", "flex");
-                });
-                $('.close-modal').click(function(){
-                    $('#signin-modal').fadeOut();
-                });
-            });
-        </script>
-        <button type="submit" class="buttonStyle" id="signUpShow">Sign Up</button>
-        <div id="signup-modal">
-            <div class="modal">
-                <div class="top-form">
-                    <div class="close-modal">
-                        &#10006;
-                    </div>
-                </div>
-                <div class="signup-form">
-                    <h2>Sign Up</h2>
-                    <form action="">
-                        <input type="text" class="form-control" placeholder="Email" required>
-                        <input type="password" class="form-control" placeholder="Password" required>
-                        <button type="button" class="buttonStyle">Sign Up</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(function(){
-                $('#signUpShow').click(function(){
-                    $('#signup-modal').fadeIn().css("display", "flex");
-                });
-                $('.close-modal').click(function(){
-                    $('#signup-modal').fadeOut();
-                });
-            });
-        </script>
+    <div class="homeText">
+        <h1>Find your Ticket To Love Today!</h1>
     </div>
     <script src="app.js"></script>
 </body>

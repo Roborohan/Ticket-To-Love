@@ -20,7 +20,8 @@ nav{
   height: 100vh; 
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  position: relative;
+  position: fixed;
+  z-index: -1;
   } 
 
 .logo{
@@ -141,6 +142,7 @@ nav{
   height: 50px;
   font-family: 'Roboto Flex', sans-serif;
   letter-spacing: 1px;
+  
 }
 
 .buttonStyle:hover{
@@ -257,4 +259,11 @@ nav{
 .signup-form button:hover{
   background-color:cornflowerblue;
   color: rgb(219, 219, 219);
+}
+
+.homeText h1{
+  font-size: 50px;
+  text-align: center;
+  font-family: 'Roboto Flex', sans-serif;
+  padding-top: 25%;
 }
