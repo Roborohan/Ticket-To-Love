@@ -74,15 +74,15 @@ app.get('/about', checkNotAuthenticated, (req,res) =>{
     res.render("about.ejs");
 });
 
-app.get('/profile', checkNotAuthenticated, (req,res) =>{
+app.get('/profile', checkAuthenticated, (req,res) =>{
     res.render("profile.ejs");
 });
 
-app.get('/matches', checkNotAuthenticated, (req,res) =>{
+app.get('/matches', checkAuthenticated, (req,res) =>{
     res.render("matches.ejs");
 });
 
-app.get('/messages', checkNotAuthenticated, (req,res) =>{
+app.get('/messages', checkAuthenticated, (req,res) =>{
     res.render("messages.ejs");
 });
 //End Routes
