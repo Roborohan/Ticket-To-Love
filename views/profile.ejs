@@ -12,6 +12,7 @@
     <title>TicketToLove</title>
 </head>
 <body class="profileBody">
+    <div id="imgcontainer"></div>
     <nav>
         <div class="logo">
             <h4>Ticket To Love</h4>
@@ -34,11 +35,9 @@
           <span>Change Image</span>
         </label>
         <input id="file" type="file" onchange="loadFile(event)"/>
-        <img src="/public/images/defaultpfp.png" id="output" width="200" />
+        <img src="/images/defaultpfp.png" id="output" width="200" />
     </div>
-    <div id="imgcontainer"></div>
-    </div>
-    <script src="../navbar.js"></script>
+    <script src="/js/navbar.js"></script>
 </body>
 <script type="text/javascript">
     var loadFile = function (event) {

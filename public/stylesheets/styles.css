@@ -15,7 +15,7 @@ nav{
 }
 
 #imgcontainer {
-  background-image: url("./public/images/citybackdrop.jpeg");
+  background-image: url("/images/SmilingNotEating.jpg");
   width: 100vw;
   height: 100vh; 
   background-size: 100% 100%;
@@ -306,7 +306,6 @@ nav{
   align-items: center;
   position: relative;
   transition: all 0.3s ease;
-  top: 100px;
 }
 .profile-pic input {
   display: none;
