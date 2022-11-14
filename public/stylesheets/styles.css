@@ -306,6 +306,7 @@ nav{
   align-items: center;
   position: relative;
   transition: all 0.3s ease;
+  padding-top: 40px;
 }
 .profile-pic input {
   display: none;
@@ -339,4 +340,11 @@ nav{
   display: inline-flex;
   padding: 0.2em;
   height: 2em;
+}
+
+.titleText{
+  font-size: 30px;
+  text-align: center;
+  font-family: 'Roboto Flex', sans-serif;
+  padding-top: 30px;
 }
