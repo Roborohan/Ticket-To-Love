@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <!-- THE HEAD TAG PARTIAL -->
+    <%- include("../authpartials/head") %>
+
+    <body>
+        <!-- THE HEADER TAG PARTIAL -->
+        <%- include("../authpartials/header") %>
+        <main>
+            <form action = "/auth/register" method="POST">
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
+                <input type="submit" value="register">
+            </form>
+
+        </main>
+        <!-- THE HEAD TAG PARTIAL -->
+        <%- include("../authpartials/footer") %>
+    </body>
+</html>
