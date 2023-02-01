@@ -45,6 +45,9 @@ router.get('/matches', AuthController.getMatches)
 
 //MESSAGES
 router.get('/messages', AuthController.getMessages)
+
+//FAVMOVIE
+router.get('/favmovie', AuthController.getFavMovie)
 ///////////////////////////////
 // Export Router
 ////////////////////////////////

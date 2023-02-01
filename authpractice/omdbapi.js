@@ -4,9 +4,9 @@ const axios = require('axios');                     //needed to gather data from
 //Add code that gets the title from the html and stores it in the title category
 
 //variables to search omdb api
-var api = ' http://www.omdbapi.com/?';
+var api = 'http://www.omdbapi.com/?';
 var searchtitle = 't=';
-var title = 'Borat';                         //TITLE WILL BE REPLACED BY TITLE GIVEN BY USER *THIS IS A PLACEHOLDER*
+var title = 'Rango';                         //TITLE WILL BE REPLACED BY TITLE GIVEN BY USER *THIS IS A PLACEHOLDER*
 var apikey= '&apikey=REDACTED_API_KEY';                 //this api key is unqiuely assigned and necesssary for the api call
 var url = api + searchtitle + title + apikey;
 

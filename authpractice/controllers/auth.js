@@ -60,6 +60,10 @@ const getMessages = (req,res) => {
     res.render('auth/messages')
 }
 
+const getFavMovie = (req,res) => {
+    res.render('auth/favmovie')
+}
+
 
 module.exports = {
     getRegister,
@@ -71,5 +75,6 @@ module.exports = {
     about,
     getProfile,
     getMatches,
-    getMessages
+    getMessages,
+    getFavMovie
 }
