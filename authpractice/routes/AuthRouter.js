@@ -4,10 +4,7 @@
 const router = require("express").Router()
 const AuthController = require("../controllers/auth.js")
 const auth = require("../auth")
-//const {
-//    checkAuthenticated,
-//    checkNotAuthenticated,
-//  } = require("../middlewares/authentication")
+
 ///////////////////////////////
 // Router Specific Middleware
 ////////////////////////////////

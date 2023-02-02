@@ -1,18 +1,18 @@
 function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return res.redirect("../");
-    }
-    next();
+  if (req.isAuthenticated()) {
+    return res.redirect("../");
   }
+  next();
+}
   
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect(".../auth/login");
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
   }
-  
-  module.exports = {
-    checkNotAuthenticated,
-    checkAuthenticated,
-  };
+  res.redirect(".../login");
+}
+
+module.exports = {
+  checkNotAuthenticated,
+  checkAuthenticated,
+};
