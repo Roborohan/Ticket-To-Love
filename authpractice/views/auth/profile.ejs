@@ -8,8 +8,12 @@
         <!-- THE HEADER TAG PARTIAL -->
         <%- include("../partials/header") %>
         <main>
-            <h1 class="profileTitle"><%= name %>'s Profile</h1>
-
+            <h1 class="welcomeText"><%= name %>'s Profile</h1>
+            <form action="./logout" method="GET">
+                <button type="submit" id="logoutButton" title="Logout" >
+                    <img src="/images/logout.png" height="50px" width="50px">
+                </button>
+            </form>
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../partials/footer") %>

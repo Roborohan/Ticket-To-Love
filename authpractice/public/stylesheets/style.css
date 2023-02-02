@@ -1,5 +1,5 @@
 *{
-    margin: 0px;
+    margin: 0;
     padding: 0px;
     box-sizing: border-box;
   }
@@ -275,7 +275,7 @@
     font-size: 50px;
     text-align: center;
     font-family: 'Roboto Flex', sans-serif;
-    padding-top: 10%;
+    padding-top: 5%
   }
   
   .logoutButton{
@@ -386,12 +386,6 @@
   .form-design{
      text-align: center;
      justify-content: center;
-     display: flex; 
-  }
-
-  .profileTitle{
-      font-size: 50px;
-      text-align: center;
-      font-family: 'Roboto Flex', sans-serif;
-      padding-top: 5%;
+     display: flex;
+     padding-top: 5%;
   }

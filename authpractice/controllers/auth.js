@@ -37,7 +37,7 @@ const loginSubmit = async (req,res) => {
 
 const logout = (req,res) => {
     req.session.user = undefined
-    res.json({message: "logged out"})
+    res.redirect("../")
 }
 
 const test = (req,res) => {

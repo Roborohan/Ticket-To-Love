@@ -38,16 +38,16 @@ router.get("/test", auth, AuthController.test) //auth means that this page is on
 router.get('/about', AuthController.about)
 
 //PROFILE
-router.get('/profile', AuthController.getProfile)
+router.get('/profile', auth, AuthController.getProfile)
 
 //MATCHES
-router.get('/matches', AuthController.getMatches)
+router.get('/matches', auth, AuthController.getMatches)
 
 //MESSAGES
-router.get('/messages', AuthController.getMessages)
+router.get('/messages', auth, AuthController.getMessages)
 
 //FAVMOVIE
-router.get('/favmovie', AuthController.getFavMovie)
+router.get('/favmovie', auth, AuthController.getFavMovie)
 ///////////////////////////////
 // Export Router
 ////////////////////////////////
