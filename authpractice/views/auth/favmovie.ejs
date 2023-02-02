@@ -14,9 +14,7 @@
                 <input type="text" id="movie" placeholder="Movie...">
                 <button>Search Movie</button>
             </form>
-            <div id="result">
-
-            </div>
+            <div id="result"></div>
         </main>
         <!-- THE HEAD TAG PARTIAL -->
         <%- include("../partials/footer") %>
@@ -37,7 +35,7 @@
                     success: function(data){
                         console.log(data)
                         result = `
-                        <img width="200" height="200" "src = "${data.Poster}"/>
+                        <img width="200" height="200" src = "${data.Poster}"/>
                         <h2>Title: ${data.Title}</h2>
                         <h2>Date of Release: ${data.Released}</h2>
                         <h2>Runtime: ${data.Runtime}</h2>
