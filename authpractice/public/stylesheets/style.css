@@ -363,6 +363,7 @@
     top: 50%;
     right: 50%;
     position: fixed;
+    z-index: -1;
   }
 
   .homeButtonStyleReg{
@@ -379,4 +380,18 @@
     top: 50%;
     right: 40%;
     position: fixed; 
+    z-index: -1;
+  }
+
+  .form-design{
+     text-align: center;
+     justify-content: center;
+     display: flex; 
+  }
+
+  .profileTitle{
+      font-size: 50px;
+      text-align: center;
+      font-family: 'Roboto Flex', sans-serif;
+      padding-top: 5%;
   }

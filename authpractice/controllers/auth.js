@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs")
 const User = require("../models/User")
 
 const getRegister = (req,res) => {
-    res.render("auth/register")
+    res.render("auth/register", {"name": req.body.name})
 }
 
 const registerSubmit = async (req,res) => {
@@ -49,7 +49,7 @@ const about = (req,res) => {
 }
 
 const getProfile = (req,res) => {
-    res.render("auth/profile")
+    res.render("auth/profile", {name: req.body.name})
 }
 
 const getMatches = (req,res) => {

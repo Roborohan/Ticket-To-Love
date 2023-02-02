@@ -8,11 +8,13 @@
         <!-- THE HEADER TAG PARTIAL -->
         <%- include("../authpartials/header") %>
         <main>
-            <form action = "/auth/login" method="POST">
-                <input type="text" name="username" placeholder="username"><br>
-                <input type="password" name="password" placeholder="password"><br>
-                <input type="submit" value="login"><br>
-            </form>
+            <div classs="form-design">
+                <form action = "/auth/login" method="POST">
+                    <input type="text" name="username" placeholder="username"><br>
+                    <input type="password" name="password" placeholder="password"><br>
+                    <input type="submit" value="login"><br>
+                </form>
+            </div>
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../authpartials/footer") %>
