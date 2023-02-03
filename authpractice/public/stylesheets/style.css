@@ -83,6 +83,7 @@
       width: 100%;
       transform: translateX(100%);
       transition: transform 0.5s ease-in;
+      z-index: 1;
     }
     .nav-links li{
       opacity: 0;
@@ -388,4 +389,10 @@
      justify-content: center;
      display: flex;
      padding-top: 5%;
+  }
+
+  .logoutButton{
+    background-color: white;
+    border: 0px;
+    cursor: pointer;
   }
