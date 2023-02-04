@@ -14,8 +14,16 @@
                     <img src="/images/logout.png" height="50px" width="50px">
                 </button>
             </form>
+            <div class="profile-pic-div">
+                <img id="photo" src="/images/defaultpfp.png">
+                <input type="file" id="file">
+                <label for="file" id="uploadBtn">Choose Photo</label>
+            </div>
+
+
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../partials/footer") %>
+        <script src="/js/profilepic.js"></script>
     </body>
 </html> 
