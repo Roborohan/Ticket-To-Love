@@ -13,10 +13,10 @@ const auth = require("../auth")
 // Router Routes
 ////////////////////////////////
 
-//CREATE PAGE
+//REGISTER
 router.get("/register", AuthController.getRegister)
 
-//CREATE SUBMISSION
+//REGISTER ACCOUNT
 router.post("/register", AuthController.registerSubmit)
 
 //LOGIN
@@ -36,6 +36,9 @@ router.get('/about', AuthController.about)
 
 //PROFILE
 router.get('/profile', auth, AuthController.getProfile)
+
+//PROFILE SUBMIT
+router.post('/profile', auth, AuthController.profileSubmit)
 
 //MATCHES
 router.get('/matches', auth, AuthController.getMatches)

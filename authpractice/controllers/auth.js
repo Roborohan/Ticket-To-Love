@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs")
 const User = require("../models/User")
+const Profile = require("../models/Profile")
 
 const getRegister = (req,res) => {
     res.render("auth/register")
@@ -53,9 +54,27 @@ const getProfile = (req,res) => {
     res.render("auth/profile", {user})
 }
 
-const profileSubmit = async (req,res) => {
-    
-}
+const profileSubmit = async (req, res) => {
+    try {
+        req.body.username = req.session.user;
+        const existingProfile = await Profile.findOne({ username: req.body.username });
+        if (existingProfile) {
+            await Profile.findOneAndUpdate({ username: req.body.username }, req.body);
+        } else {
+            const profile = new Profile(req.body);
+            await profile.save();
+        }
+        res.render('auth/profile', { 
+            username: req.body.username,
+            sexuality: req.body.sexuality,
+            gender: req.body.gender,
+            bio: req.body.bio,
+            photo: req.body.photo
+        });
+    } catch (error) {
+        res.send('Error updating profile: ' + error);
+    }
+};
 
 const getMatches = (req,res) => {
     res.render('auth/matches')
@@ -81,5 +100,6 @@ module.exports = {
     getProfile,
     getMatches,
     getMessages,
-    getFavMovie
+    getFavMovie,
+    profileSubmit
 }
