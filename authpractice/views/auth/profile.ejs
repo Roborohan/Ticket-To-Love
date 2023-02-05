@@ -14,16 +14,52 @@
                     <img src="/images/logout.png" height="50px" width="50px">
                 </button>
             </form>
-            <div class="profile-pic-div">
-                <img id="photo" src="/images/defaultpfp.png">
-                <input type="file" id="file">
-                <label for="file" id="uploadBtn">Choose Photo</label>
-            </div>
-
-
+            <form action="/profile" method="POST">
+                <div class="profile-pic-div">
+                    <img id="photo" src="/images/defaultpfp.png">
+                    <input type="file" id="file" required>
+                    <label for="file" id="uploadBtn">Choose Photo</label>
+                </div>
+                <br><br>
+                <div class="profile-options">
+                    <label for="sexuality">Sexuality:</label>
+                    <select id="sexuality" name="sexuality" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="No-Preference">No Preference</option>
+                    </select>
+                    <br><br>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Non-binary">Non-binary</option>
+                        <option value="Transgender">Transgender</option>
+                        <option value="Genderqueer">Genderqueer</option>
+                    </select>
+                    <br><br>
+                    <label for="bio">Bio:</label>
+                    <textarea id="bio" name="bio" rows="5" cols="30" oninput="limitBio()" required></textarea>
+                    <p id="charCount">0/100</p>
+                    <br><br>
+                    <input id="submit-profile" type="submit" value="SAVE">
+                </div>
+            </form>
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../partials/footer") %>
         <script src="/js/profilepic.js"></script>
+        <script>
+            function limitBio(){
+                const bio = document.getElementById("bio");
+                const charCount = document.getElementById("charCount");
+                const maxLength = 100;
+
+                if(bio.value.length > maxLength){
+                    bio.value = bio.value.substring(0, maxLength);
+                }
+                charCount.innerHTML = bio.value.length + "/" + maxLength;
+            }
+        </script>
     </body>
 </html> 

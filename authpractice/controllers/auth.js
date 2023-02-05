@@ -53,6 +53,10 @@ const getProfile = (req,res) => {
     res.render("auth/profile", {user})
 }
 
+const profileSubmit = async (req,res) => {
+    
+}
+
 const getMatches = (req,res) => {
     res.render('auth/matches')
 }
