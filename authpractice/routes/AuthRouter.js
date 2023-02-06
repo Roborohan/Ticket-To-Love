@@ -4,6 +4,19 @@
 const router = require("express").Router()
 const AuthController = require("../controllers/auth.js")
 const auth = require("../auth")
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/images/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({
+    storage: storage
+});
 
 ///////////////////////////////
 // Router Specific Middleware
@@ -38,7 +51,7 @@ router.get('/about', AuthController.about)
 router.get('/profile', auth, AuthController.getProfile)
 
 //PROFILE SUBMIT
-router.post('/profile', auth, AuthController.profileSubmit)
+router.post('/profile', auth, upload.single("photo"), AuthController.profileSubmit)
 
 //MATCHES
 router.get('/matches', auth, AuthController.getMatches)

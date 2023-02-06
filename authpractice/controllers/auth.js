@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs")
 const User = require("../models/User")
 const Profile = require("../models/Profile")
+const multer = require("multer");
 
 const getRegister = (req,res) => {
     res.render("auth/register")
@@ -49,10 +50,32 @@ const about = (req,res) => {
     res.render('auth/about')
 }
 
-const getProfile = (req,res) => {
-    const user = req.session.user
-    res.render("auth/profile", {user})
-}
+const getProfile = async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ username: req.session.user });
+        res.render('auth/profile', { 
+            profile: profile, 
+            username: req.session.user, 
+            photo: profile ? profile.photo : '', 
+            sexuality: profile ? profile.sexuality : '', 
+            gender: profile ? profile.gender : '', 
+            bio: profile ? profile.bio : '', 
+            charCount: profile ? profile.bio.length + "/100" : '' });
+    } catch (error) {
+        res.send('Error fetching profile: ' + error);
+    }
+};
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, "public/images");
+    },
+    filename: function(req, file, cb) {
+        cb(null, `${req.session.user}-${Date.now()}.${file.mimetype.split("/")[1]}`);
+    }
+});
+
+const upload = multer({ storage });
 
 const profileSubmit = async (req, res) => {
     try {
@@ -64,17 +87,29 @@ const profileSubmit = async (req, res) => {
             const profile = new Profile(req.body);
             await profile.save();
         }
+        if (req.file) {
+            req.body.photo = `/images/${req.file.filename}`;
+        }
+
+        // fetch profile data from the database
+        const updatedProfile = await Profile.findOne({ username: req.body.username });
         res.render('auth/profile', { 
-            username: req.body.username,
-            sexuality: req.body.sexuality,
-            gender: req.body.gender,
-            bio: req.body.bio,
-            photo: req.body.photo
-        });
+            profile: updatedProfile, 
+            username: req.session.user, 
+            photo: updatedProfile ? updatedProfile.photo : '', 
+            sexuality: updatedProfile ? updatedProfile.sexuality : '', 
+            gender: updatedProfile ? updatedProfile.gender : '', 
+            bio: updatedProfile ? updatedProfile.bio : '', 
+            charCount: updatedProfile ? updatedProfile.bio.length + "/100" : '' });
     } catch (error) {
         res.send('Error updating profile: ' + error);
     }
 };
+
+
+  
+
+
 
 const getMatches = (req,res) => {
     res.render('auth/matches')
