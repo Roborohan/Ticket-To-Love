@@ -17,7 +17,7 @@
                 <h1 class="welcomeText"><%= profile.username %>'s Profile</h1>
                 <form action="/auth/profile" method="POST">
                     <div class="profile-pic-div">
-                    <img id="photo" src="<%= profile.photo || '/images/defaultpfp.png' %>" onclick="document.querySelector('#file').click()">
+                    <img id="photo" src="<%= profile.photo ? profile.photo.toString('utf8') : '/images/defaultpfp.png' %>" onclick="document.querySelector('#file').click()">
                     <input type="file" id="file" name="photo" required>
                     <label for="file" id="uploadBtn">Choose Photo</label>
                     </div>

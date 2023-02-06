@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs")
 const User = require("../models/User")
 const Profile = require("../models/Profile")
 const multer = require("multer");
+const fs = require("fs");
+
 
 const getRegister = (req,res) => {
     res.render("auth/register")
@@ -56,7 +58,8 @@ const getProfile = async (req, res) => {
         res.render('auth/profile', { 
             profile: profile, 
             username: req.session.user, 
-            photo: profile ? profile.photo : '', 
+            photo: profile && profile.photo ? profile.photo.data.toString('base64') : '', 
+            contentType: profile && profile.photo ? profile.photo.contentType : '',
             sexuality: profile ? profile.sexuality : '', 
             gender: profile ? profile.gender : '', 
             bio: profile ? profile.bio : '', 
@@ -65,6 +68,7 @@ const getProfile = async (req, res) => {
         res.send('Error fetching profile: ' + error);
     }
 };
+
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -88,23 +92,23 @@ const profileSubmit = async (req, res) => {
             await profile.save();
         }
         if (req.file) {
-            req.body.photo = `/images/${req.file.filename}`;
+            const profile = await Profile.findOne({ username: req.body.username });
+            profile.photo = {
+                data: fs.readFileSync(req.file.path),
+                contentType: req.file.mimetype
+            };
+            await profile.save();
         }
 
         // fetch profile data from the database
         const updatedProfile = await Profile.findOne({ username: req.body.username });
-        res.render('auth/profile', { 
-            profile: updatedProfile, 
-            username: req.session.user, 
-            photo: updatedProfile ? updatedProfile.photo : '', 
-            sexuality: updatedProfile ? updatedProfile.sexuality : '', 
-            gender: updatedProfile ? updatedProfile.gender : '', 
-            bio: updatedProfile ? updatedProfile.bio : '', 
-            charCount: updatedProfile ? updatedProfile.bio.length + "/100" : '' });
+        res.render('auth/profile', { profile: updatedProfile });
     } catch (error) {
         res.send('Error updating profile: ' + error);
     }
 };
+
+
 
 
   
