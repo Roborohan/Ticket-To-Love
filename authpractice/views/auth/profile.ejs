@@ -13,9 +13,9 @@
                     <img src="/images/logout.png" height="50px" width="50px">
                 </button>
             </form>
-            <% if (typeof profile !== 'undefined' && profile) { %>
+            <% if (profile) { %>
                 <h1 class="welcomeText"><%= profile.username %>'s Profile</h1>
-                <form action="/auth/profile" method="POST">
+                <form action="/auth/profile" method="POST" enctype="multipart/form-data">
                     <div class="profile-pic-div">
                     <img id="photo" src="<%= profile.photo ? profile.photo.toString('utf8') : '/images/defaultpfp.png' %>" onclick="document.querySelector('#file').click()">
                     <input type="file" id="file" name="photo" required>

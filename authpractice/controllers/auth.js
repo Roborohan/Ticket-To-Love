@@ -51,23 +51,45 @@ const test = (req,res) => {
 const about = (req,res) => {
     res.render('auth/about')
 }
-
 const getProfile = async (req, res) => {
     try {
-        const profile = await Profile.findOne({ username: req.session.user });
+        let profile = await Profile.findOne({ username: req.session.user });
+        let photo = '';
+        let contentType = '';
+        let sexuality = '';
+        let gender = '';
+        let bio = '';
+        let charCount = '';
+
+        if (!profile) {
+            profile = new Profile({
+                username: req.session.user
+            });
+        } else {
+            photo = profile.photo ? profile.photo.data.toString('base64') : '';
+            contentType = profile.photo ? profile.photo.contentType : '';
+            sexuality = profile.sexuality || 'No Preference';
+            gender = profile.gender || 'Other';
+            bio = profile.bio || '';
+            charCount = bio.length + "/100";
+        }
+
         res.render('auth/profile', { 
-            profile: profile, 
+            profile, 
             username: req.session.user, 
-            photo: profile && profile.photo ? profile.photo.data.toString('base64') : '', 
-            contentType: profile && profile.photo ? profile.photo.contentType : '',
-            sexuality: profile ? profile.sexuality : '', 
-            gender: profile ? profile.gender : '', 
-            bio: profile ? profile.bio : '', 
-            charCount: profile ? profile.bio.length + "/100" : '' });
+            photo, 
+            contentType, 
+            sexuality, 
+            gender, 
+            bio, 
+            charCount 
+        });
     } catch (error) {
         res.send('Error fetching profile: ' + error);
     }
 };
+
+
 
 
 const storage = multer.diskStorage({
@@ -84,15 +106,16 @@ const upload = multer({ storage });
 const profileSubmit = async (req, res) => {
     try {
         req.body.username = req.session.user;
-        const existingProfile = await Profile.findOne({ username: req.body.username });
-        if (existingProfile) {
-            await Profile.findOneAndUpdate({ username: req.body.username }, req.body);
-        } else {
-            const profile = new Profile(req.body);
+        let profile = await Profile.findOne({ username: req.body.username });
+
+        if (!profile) {
+            profile = new Profile(req.body);
             await profile.save();
+        } else {
+            await Profile.findOneAndUpdate({ username: req.body.username }, req.body);
         }
+
         if (req.file) {
-            const profile = await Profile.findOne({ username: req.body.username });
             profile.photo = {
                 data: fs.readFileSync(req.file.path),
                 contentType: req.file.mimetype
@@ -100,13 +123,17 @@ const profileSubmit = async (req, res) => {
             await profile.save();
         }
 
-        // fetch profile data from the database
-        const updatedProfile = await Profile.findOne({ username: req.body.username });
-        res.render('auth/profile', { profile: updatedProfile });
+        profile = await Profile.findOne({ username: req.body.username });
+        res.render('auth/profile', { profile });
     } catch (error) {
         res.send('Error updating profile: ' + error);
     }
 };
+
+
+
+
+
 
 
 
