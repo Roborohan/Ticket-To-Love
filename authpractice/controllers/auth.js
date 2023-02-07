@@ -39,10 +39,16 @@ const loginSubmit = async (req,res) => {
     }
 }
 
-const logout = (req,res) => {
-    req.session.user = undefined
-    res.redirect("../")
-}
+const logout = (req, res) => {
+    console.log("Logout function called");
+    req.session.destroy((error) => {
+        if (error) {
+            res.send('Error logging out: ' + error);
+        } else {
+            res.redirect("../");
+        }
+    });
+};
 
 const test = (req,res) => {
     res.send("logged in")

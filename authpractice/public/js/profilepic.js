@@ -27,7 +27,7 @@ form.addEventListener("submit", function(event){
     event.preventDefault();
     const formData = new FormData();
     formData.append("photo", file.files[0]);
-    formData.append("username", document.querySelector("#username").value);
+    formData.append("username", username);
     formData.append("sexuality", document.querySelector("#sexuality").value);
     formData.append("gender", document.querySelector("#gender").value);
     formData.append("bio", document.querySelector("#bio").value);
@@ -44,4 +44,5 @@ form.addEventListener("submit", function(event){
         console.error(error);
         // handle the error
     });
-});
+}.bind(this, username));
+
