@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    
     <!-- THE HEAD TAG PARTIAL -->
     <%- include("../partials/head") %>
-
     <body>
         <!-- THE HEADER TAG PARTIAL -->
         <%- include("../partials/header") %>
         <main>
+            <h1 class="welcomeText">Pick Your Favourite Movies</h1>
+            <h2 class="subtext">you can pick up to 10</h2>
             <form id="movie-form" autocomplete="on">
-                <label for="Movie">Movie Name</label><br>
                 <input type="text" id="movie" placeholder="Movie...">
-                <button>Search Movie</button>
+                <button id="movie-btn">Search Movie</button>
             </form>
             <div id="result"></div>
         </main>
@@ -32,22 +31,64 @@
                     success: function(data){
                         console.log(data)
                         if(data.Response == "False"){
-                            $("#result").html(`<h2>${data.Error}</h2>`);
+                            $("#result").html(`<h2>Movie not found! Try again.</h2>`);
                         }
-                        else{
+                        else {
                             result = `
-                            <img width="200" height="200" src = "${data.Poster}"/>
-                            <h2>Title: ${data.Title}</h2>
-                            <h2>Date of Release: ${data.Released}</h2>
-                            <h2>Runtime: ${data.Runtime}</h2>
-                            <h2>Genre: ${data.Genre}</h2>
-                            <h2>Actors: ${data.Actors}</h2>
-                            <h2>Director: ${data.Director}</h2>
-                            <h2>Country: ${data.Country}</h2>
-                            <h2>Rating: ${data.imdbRating}</h2>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="display: flex;">
+                                    <img width="200" height="200" src="${data.Poster}" />
+                                    <div style="margin-left: 10px;">
+                                        <h2>Title: ${data.Title}</h2>
+                                        <h2>Date of Release: ${data.Released}</h2>
+                                        <h2>Runtime: ${data.Runtime}</h2>
+                                        <h2>Genre: ${data.Genre}</h2>
+                                        <h2>Actors: ${data.Actors}</h2>
+                                        <h2>Director: ${data.Director}</h2>
+                                        <h2>Country: ${data.Country}</h2>
+                                        <h2>Rating: ${data.imdbRating}</h2>
+                                        <form action="/auth/favmovie" method="POST">
+                                            <input type="hidden" name="title" value="${data.Title}" />
+                                            <input type="hidden" name="releaseDate" value="${data.Released}" />
+                                            <input type="hidden" name="runtime" value="${data.Runtime}" />
+                                            <input type="hidden" name="genre" value="${data.Genre}" />
+                                            <input type="hidden" name="actors" value="${data.Actors}" />
+                                            <input type="hidden" name="director" value="${data.Director}" />
+                                            <input type="hidden" name="country" value="${data.Country}" />
+                                            <input type="hidden" name="rating" value="${data.imdbRating}" />
+                                            <button type="submit" style="background-color: red; color: white;">Add To Favourites</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             `
                             $("#result").html(result)
+
+                            $("#add-to-favorites-button").click(function() {
+                                $.ajax({
+                                    url: "/favmovie",
+                                    type: "POST",
+                                    data: {
+                                        username: req.session.user,
+                                        title: data.Title,
+                                        releaseDate: data.Released,
+                                        runtime: data.Runtime,
+                                        genre: data.Genre,
+                                        actors: data.Actors,
+                                        director: data.Director,
+                                        country: data.Country,
+                                        rating: data.imdbRating
+                                    },
+                                    success: function() {
+                                        console.log("Movie added to favorites!");
+                                    },
+                                    error: function(error) {
+                                        console.error(error);
+                                    }
+                                });
+                            });
                         }
+
                     }
                 })
             })

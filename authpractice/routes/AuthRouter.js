@@ -61,6 +61,10 @@ router.get('/messages', auth, AuthController.getMessages)
 
 //FAVMOVIE
 router.get('/favmovie', auth, AuthController.getFavMovie)
+
+//FAVMOVIE SUBMIT
+router.post('/favmovie', auth, AuthController.favMovieSubmit)
+
 ///////////////////////////////
 // Export Router
 ////////////////////////////////

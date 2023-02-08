@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0px;
     box-sizing: border-box;
+    font-family: 'Roboto Flex', sans-serif;
   }
   
   nav{
@@ -10,7 +11,6 @@
     align-items: center;
     min-height: 8vh;
     background-color: cornflowerblue;
-    font-family: 'Roboto Flex', sans-serif;
     overflow: auto;
   }
   
@@ -141,7 +141,6 @@
     background-color:cornflowerblue;
     width: 100px;
     height: 50px;
-    font-family: 'Roboto Flex', sans-serif;
     letter-spacing: 1px;
     
   }
@@ -200,7 +199,6 @@
     letter-spacing: 1px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Roboto Flex', sans-serif;
     font-size: 50px;
   }
   
@@ -208,7 +206,6 @@
     letter-spacing: 1px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Roboto Flex', sans-serif;
     font-size: 50px;
   }
   
@@ -263,19 +260,16 @@
   .homeText h1{
     font-size: 40px;
     text-align: center;
-    font-family: 'Roboto Flex', sans-serif;
     padding-top: 40px;
   }
   
   .accountText{
-    font-size: 20px;
-    font-family: 'Roboto Flex', sans-serif;
+    font-size: 20px; 
   }
   
   .welcomeText{
     font-size: 40px;
-    text-align: center;
-    font-family: 'Roboto Flex', sans-serif;
+    text-align: center; 
     padding-top: 2.5%
   }
   
@@ -288,7 +282,6 @@
     background-color:cornflowerblue;
     width: 100px;
     height: 50px;
-    font-family: 'Roboto Flex', sans-serif;
     letter-spacing: 1px;
     top: 75px;
     right: 5px;
@@ -302,7 +295,6 @@
   .titleText{
     font-size: 30px;
     text-align: center;
-    font-family: 'Roboto Flex', sans-serif;
     padding-top: 30px;
   }
 
@@ -315,7 +307,6 @@
     background-color:cornflowerblue;
     width: 100px;
     height: 50px;
-    font-family: 'Roboto Flex', sans-serif;
     letter-spacing: 1px;
     top: 50%;
     right: 50%;
@@ -332,7 +323,6 @@
     background-color:cornflowerblue;
     width: 100px;
     height: 50px;
-    font-family: 'Roboto Flex', sans-serif;
     letter-spacing: 1px;
     top: 50%;
     right: 40%;
@@ -356,7 +346,7 @@
   .profile-pic-div{
     height: 200px;
     width: 200px;
-    position: absolute;
+    position: fixed;
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -384,7 +374,6 @@
     color: rgb(219, 219, 219);
     background: rgba(100, 149, 237, 0.6);
     line-height: 30px;
-    font-family: 'Roboto Flex', sans-serif;
     font-size: 15px;
     cursor: pointer;
     display: none;
@@ -412,4 +401,31 @@
     color: rgb(219, 219, 219);
     font-size: 24px;
     border: none;
+  }
+
+  .subtext{
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #movie-form{
+    text-align: center;
+    padding-top: 5%;
+  }
+
+  #movie{
+    width: 300px;
+    height: 50px;
+    font-size: 20pt;
+  }
+
+  #result{
+    padding-top: 2.5%;
+    text-align: center;
+  }
+
+  #movie-btn{
+    width: 300px;
+    height: 50px;
+    font-size: 20pt;
   }

@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs")
 const User = require("../models/User")
 const Profile = require("../models/Profile")
+const FavMovie = require("../models/FavMovie")
 const multer = require("multer");
 const fs = require("fs");
 
@@ -95,9 +96,6 @@ const getProfile = async (req, res) => {
     }
 };
 
-
-
-
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, "public/images");
@@ -111,42 +109,29 @@ const upload = multer({ storage });
 
 const profileSubmit = async (req, res) => {
     try {
-        req.body.username = req.session.user;
-        let profile = await Profile.findOne({ username: req.body.username });
-
+        let profile = await Profile.findOne({ username: req.session.user });
         if (!profile) {
-            profile = new Profile(req.body);
-            await profile.save();
-        } else {
-            await Profile.findOneAndUpdate({ username: req.body.username }, req.body);
+            profile = new Profile({
+                username: req.session.user
+            });
         }
 
-        if (req.file) {
+        if (req.files && req.files.photo) {
             profile.photo = {
-                data: fs.readFileSync(req.file.path),
-                contentType: req.file.mimetype
+                data: req.files.photo.data,
+                contentType: req.files.photo.mimetype
             };
-            await profile.save();
         }
+        profile.sexuality = req.body.sexuality;
+        profile.gender = req.body.gender;
+        profile.bio = req.body.bio;
+        await profile.save();
 
-        profile = await Profile.findOne({ username: req.body.username });
-        res.render('auth/profile', { profile });
+        res.json({ success: true });
     } catch (error) {
-        res.send('Error updating profile: ' + error);
+        res.json({ success: false, error: error.message });
     }
 };
-
-
-
-
-
-
-
-
-
-  
-
-
 
 const getMatches = (req,res) => {
     res.render('auth/matches')
@@ -156,10 +141,68 @@ const getMessages = (req,res) => {
     res.render('auth/messages')
 }
 
-const getFavMovie = (req,res) => {
-    res.render('auth/favmovie')
-}
+// getFavMovie function
+const getFavMovie = (req, res) => {
+    res.render('auth/favmovie', {
+      username: req.session.user,
+      title: req.body.title,
+      releaseDate: req.body.releaseDate,
+      runtime: req.body.runtime,
+      genre: req.body.genre,
+      actors: req.body.actors,
+      director: req.body.director,
+      country: req.body.country,
+      rating: req.body.rating
+    });
+};
+  
+  // favMovieSubmit function
+const favMovieSubmit = async (req,res) => {
+    const { title, releaseDate, runtime, genre, actors, director, country, rating } = req.body;
 
+    // Check if the user has already reached the maximum limit of 10 favorite movies
+    const favMoviesCount = await FavMovie.countDocuments({ username: req.session.user });
+    if (favMoviesCount >= 10) {
+        console.log("Maximum limit of 10 favorite movies reached!");
+        return res.status(400).json({ error: "Maximum limit of 10 favorite movies reached!" });
+    }
+
+    // Check if the movie is already in the user's favorite list
+    const existingMovie = await FavMovie.findOne({ username: req.session.user, title: title });
+    if (existingMovie) {
+        console.log("Movie already added to favorites!");
+        return res.status(400).json({ error: "Movie already added to favorites!" });
+    }
+
+    // Add the new favorite movie
+    const favMovie = new FavMovie({
+        username: req.session.user,
+        title: title,
+        releaseDate: releaseDate,
+        runtime: runtime,
+        genre: genre,
+        actors: actors,
+        director: director,
+        country: country,
+        rating: rating
+    });
+
+    try {
+        await favMovie.save();
+        console.log("Movie added to favorites!");
+        res.json({ message: "Movie added to favorites!" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to add movie to favorites!" });
+    }
+};
+
+  
+
+  
+
+
+  
 
 module.exports = {
     getRegister,
@@ -173,5 +216,6 @@ module.exports = {
     getMatches,
     getMessages,
     getFavMovie,
-    profileSubmit
+    profileSubmit,
+    favMovieSubmit
 }
