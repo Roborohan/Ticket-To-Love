@@ -36,6 +36,10 @@ const FavMovieSchema = new Schema({
       rating: {
         type: Number,
         required: true
+      },
+      poster: {
+        type: String,
+        required: true 
       }
 });
 

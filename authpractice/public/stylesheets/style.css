@@ -429,3 +429,41 @@
     height: 50px;
     font-size: 20pt;
   }
+
+  #favmovie-btn{
+    background-color: red;
+    border: none;
+    color:rgb(219, 219, 219);
+    width: 300px;
+    height: 60px;
+    font-size: 20pt;
+  }
+
+  .fav-posters {
+    text-align: center;
+  }
+  
+  .fav-poster {
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .delete-fav-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .delete-fav {
+    color: white;
+  }
+  

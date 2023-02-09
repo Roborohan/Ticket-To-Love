@@ -142,60 +142,62 @@ const getMessages = (req,res) => {
 }
 
 // getFavMovie function
-const getFavMovie = (req, res) => {
-    res.render('auth/favmovie', {
-      username: req.session.user,
-      title: req.body.title,
-      releaseDate: req.body.releaseDate,
-      runtime: req.body.runtime,
-      genre: req.body.genre,
-      actors: req.body.actors,
-      director: req.body.director,
-      country: req.body.country,
-      rating: req.body.rating
-    });
+const getFavMovie = async (req, res) => {
+    try {
+        const favMovies = await FavMovie.find({ username: req.session.user });
+        res.render('auth/favmovie', {
+            username: req.session.user,
+            favMovies: favMovies
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to retrieve favorite movies!" });
+    }
 };
+
   
   // favMovieSubmit function
-const favMovieSubmit = async (req,res) => {
-    const { title, releaseDate, runtime, genre, actors, director, country, rating } = req.body;
-
-    // Check if the user has already reached the maximum limit of 10 favorite movies
-    const favMoviesCount = await FavMovie.countDocuments({ username: req.session.user });
-    if (favMoviesCount >= 10) {
-        console.log("Maximum limit of 10 favorite movies reached!");
-        return res.status(400).json({ error: "Maximum limit of 10 favorite movies reached!" });
-    }
-
-    // Check if the movie is already in the user's favorite list
-    const existingMovie = await FavMovie.findOne({ username: req.session.user, title: title });
-    if (existingMovie) {
-        console.log("Movie already added to favorites!");
-        return res.status(400).json({ error: "Movie already added to favorites!" });
-    }
-
-    // Add the new favorite movie
-    const favMovie = new FavMovie({
-        username: req.session.user,
-        title: title,
-        releaseDate: releaseDate,
-        runtime: runtime,
-        genre: genre,
-        actors: actors,
-        director: director,
-        country: country,
-        rating: rating
-    });
-
+const favMovieSubmit = async (req, res) => {
     try {
+        const { title, releaseDate, runtime, genre, actors, director, country, rating, poster } = req.body;
+
+        // Check if the user has already reached the maximum limit of 10 favorite movies
+        const favMoviesCount = await FavMovie.countDocuments({ username: req.session.user });
+        if (favMoviesCount >= 10) {
+            console.log("Maximum limit of 10 favorite movies reached!");
+            return res.status(400).json({ error: "Maximum limit of 10 favorite movies reached!" });
+        }
+
+        // Check if the movie is already in the user's favorite list
+        const existingMovie = await FavMovie.findOne({ username: req.session.user, title: title });
+        if (existingMovie) {
+            console.log("Movie already added to favorites!");
+            return res.status(400).json({ error: "Movie already added to favorites!" });
+        }
+
+        // Add the new favorite movie
+        const favMovie = new FavMovie({
+            username: req.session.user,
+            title: title,
+            releaseDate: releaseDate,
+            runtime: runtime,
+            genre: genre,
+            actors: actors,
+            director: director,
+            country: country,
+            rating: rating,
+            poster: poster
+        });
+
         await favMovie.save();
         console.log("Movie added to favorites!");
-        res.json({ message: "Movie added to favorites!" });
+        res.redirect('/auth/favmovie');
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to add movie to favorites!" });
     }
 };
+
 
   
 
