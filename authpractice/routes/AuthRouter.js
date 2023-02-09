@@ -3,6 +3,7 @@
 ////////////////////////////////
 const router = require("express").Router()
 const AuthController = require("../controllers/auth.js")
+const FavMovie = require("../models/FavMovie")
 const auth = require("../auth")
 const multer = require("multer");
 const path = require("path");
@@ -64,6 +65,9 @@ router.get('/favmovie', auth, AuthController.getFavMovie)
 
 //FAVMOVIE SUBMIT
 router.post('/favmovie', auth, AuthController.favMovieSubmit)
+
+//DELETE FAVOURITE MOVIE
+router.delete("/delete-fav", auth, AuthController.deleteFavMovie)
 
 ///////////////////////////////
 // Export Router

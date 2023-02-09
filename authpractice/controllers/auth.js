@@ -156,7 +156,7 @@ const getFavMovie = async (req, res) => {
 };
 
   
-  // favMovieSubmit function
+// favMovieSubmit function
 const favMovieSubmit = async (req, res) => {
     try {
         const { title, releaseDate, runtime, genre, actors, director, country, rating, poster } = req.body;
@@ -198,14 +198,22 @@ const favMovieSubmit = async (req, res) => {
     }
 };
 
-
+const deleteFavMovie = async (req, res) => {
+    try {
+      const deletedMovie = await FavMovie.findOneAndDelete({
+        username: req.session.user,
+        _id: req.body.favId
+      });
+      if (!deletedMovie) {
+        return res.status(404).json({ error: "Movie not found!" });
+      }
+      res.redirect('/auth/favmovie');
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to delete movie!" });
+    }
+};
   
-
-  
-
-
-  
-
 module.exports = {
     getRegister,
     getLogin,
@@ -219,5 +227,6 @@ module.exports = {
     getMessages,
     getFavMovie,
     profileSubmit,
-    favMovieSubmit
+    favMovieSubmit,
+    deleteFavMovie
 }

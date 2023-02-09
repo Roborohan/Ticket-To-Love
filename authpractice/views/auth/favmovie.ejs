@@ -20,8 +20,8 @@
                   <div class="fav-poster" style="display: inline-block; position: relative;">
                     <img src="<%= favMovie.poster %>" width="200" />
                     <div class="delete-fav-container" style="position: absolute; top: 0; right: 0;">
-                      <a href="#" class="delete-fav" data-id="<%= favMovie._id %>">x</a>
-                    </div>
+                        <a href="#" class="delete-fav" data-id="<%= favMovie._id %>">X</a>
+                    </div>                      
                   </div>
                   <% count++; %>
                   <% if (count % 5 === 0) { %>
@@ -114,19 +114,20 @@
         })
     </script>
     <script>
-        $(document).ready(function() {
-           $('.delete-fav').click(function(e) {
-              e.preventDefault();
-              const favId = $(this).data('id');
-              $.ajax({
-                 url: '/delete-fav',
-                 type: 'DELETE',
-                 data: { favId: favId },
-                 success: function(result) {
+    $(document).ready(function() {
+        $('.delete-fav').click(function(e) {
+            e.preventDefault();
+            const favId = $(this).data('id');
+            $.ajax({
+                url: '/delete-fav',
+                type: 'DELETE',
+                data: { favId: favId },
+                success: function(result) {
+                    console.log(result)
                     location.reload();
-                 }
-              });
-           });
+                }
+            });
         });
-     </script>
+    });
+    </script>
 </html> 
