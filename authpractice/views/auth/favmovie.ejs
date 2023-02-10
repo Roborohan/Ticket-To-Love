@@ -17,11 +17,11 @@
                 <h1 class="welcomeText">My Favourite Movies</h1><br>
                 <% let count = 0; %>
                 <% favMovies.forEach(favMovie => { %>
-                    <div class="fav-poster" style="display: inline-block; position: relative;">
-                      <img src="<%= favMovie.poster %>" width="200" />
-                      <div class="delete-fav-container" style="position: absolute; top: 0; right: 0;">
+                    <div class="fav-poster">
+                      <img src="<%= favMovie.poster %>" />
+                      <div class="delete-fav-container">
                         <a href="#" class="delete-fav" data-title="<%= favMovie.title %>">X</a>
-                      </div>                      
+                      </div>
                     </div>
                 <% }); %>
             </div>                                                     
