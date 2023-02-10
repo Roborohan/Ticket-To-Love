@@ -127,7 +127,7 @@ const profileSubmit = async (req, res) => {
         profile.bio = req.body.bio;
         await profile.save();
 
-        res.json({ success: true });
+        res.render('auth/profile')
     } catch (error) {
         res.json({ success: false, error: error.message });
     }
@@ -200,19 +200,25 @@ const favMovieSubmit = async (req, res) => {
 
 const deleteFavMovie = async (req, res) => {
     try {
-      const deletedMovie = await FavMovie.findOneAndDelete({
+      const { title } = req.body;
+      const deletedMovie = await FavMovie.deleteOne({
         username: req.session.user,
-        _id: req.body.favId
+        title: title
       });
-      if (!deletedMovie) {
-        return res.status(404).json({ error: "Movie not found!" });
+  
+      if (deletedMovie.deletedCount === 0) {
+        console.log("Movie not found in favorites!");
+        return res.status(400).json({ error: "Movie not found in favorites!" });
       }
-      res.redirect('/auth/favmovie');
+  
+      console.log("Movie deleted from favorites!");
+      res.status(200).json({ message: "Movie deleted from favorites!" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Failed to delete movie!" });
+      res.status(500).json({ error: "Failed to delete movie from favorites!" });
     }
 };
+  
   
 module.exports = {
     getRegister,

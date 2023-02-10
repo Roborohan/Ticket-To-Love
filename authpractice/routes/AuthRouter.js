@@ -66,8 +66,8 @@ router.get('/favmovie', auth, AuthController.getFavMovie)
 //FAVMOVIE SUBMIT
 router.post('/favmovie', auth, AuthController.favMovieSubmit)
 
-//DELETE FAVOURITE MOVIE
-router.delete("/delete-fav", auth, AuthController.deleteFavMovie)
+//DELETE FAVMOVIE
+router.delete("/delete-fav", auth, AuthController.deleteFavMovie);
 
 ///////////////////////////////
 // Export Router
