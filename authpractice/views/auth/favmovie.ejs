@@ -6,10 +6,15 @@
         <!-- THE HEADER TAG PARTIAL -->
         <%- include("../partials/header") %>
         <main>
+            <form action="./logout" method="GET">
+                <button type="submit" class="logoutButton" title="Logout">
+                    <img src="/images/logout.png" height="50px" width="50px">
+                </button>
+            </form>
             <h1 class="welcomeText">Pick Your Favourite Movies</h1>
             <h2 class="subtext">you can pick up to 10</h2>
             <form id="movie-form" autocomplete="on">
-                <input type="text" id="movie" placeholder="Movie...">
+                <input type="text" id="movie" placeholder="Movie..." spellcheck="true">
                 <button id="movie-btn">Search Movie</button>
             </form>
             <div id="result"></div>
@@ -137,5 +142,4 @@
             });
         });
     </script>
-    
 </html> 

@@ -4,6 +4,12 @@
     box-sizing: border-box;
     font-family: 'Roboto Flex', sans-serif;
   }
+
+  body{
+    background-image: linear-gradient(to right, #ffffe0, #ffb6c1);
+    min-height: 100vh;
+    z-index: -10000;
+  }
   
   nav{
     display: flex;
@@ -298,36 +304,39 @@
     padding-top: 30px;
   }
 
-  .homeButtonStyleLogin{
-    font-size: 25px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    text-align: center;
-    background-color:cornflowerblue;
-    width: 100px;
-    height: 50px;
-    letter-spacing: 1px;
+  .homeButtonStyle {
+    position: fixed;
     top: 50%;
     right: 50%;
-    position: fixed;
-    z-index: -1;
+    display: flex;
   }
-
-  .homeButtonStyleReg{
+  
+  .homeButtonStyleLogin {
     font-size: 25px;
     cursor: pointer;
     border-radius: 6px;
     border: none;
     text-align: center;
-    background-color:cornflowerblue;
+    background-color: cornflowerblue;
     width: 100px;
     height: 50px;
     letter-spacing: 1px;
-    top: 50%;
-    right: 40%;
-    position: fixed; 
-    z-index: -1;
+    position: absolute;
+    right: 50px;
+  }
+  
+  .homeButtonStyleReg {
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    text-align: center;
+    background-color: cornflowerblue;
+    width: 100px;
+    height: 50px;
+    letter-spacing: 1px;
+    position: absolute;
+    right: -150px;
   }
 
   .form-design{
@@ -338,7 +347,7 @@
   }
 
   .logoutButton{
-    background-color: white;
+    background-color: transparent;
     border: 0px;
     cursor: pointer;
   }
@@ -474,3 +483,11 @@
     color: white;
   }
   
+
+  .aboutContent p {
+    font-size: 18px;
+    margin: 30px 0;
+    text-align: center;
+    padding: 20px;
+
+  }
