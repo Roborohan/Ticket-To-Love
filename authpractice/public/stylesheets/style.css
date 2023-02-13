@@ -20,16 +20,6 @@
     overflow: auto;
   }
   
-  #imgcontainer {
-    background-image: url("/images/citybackdrop.jpeg");
-    width: 100vw;
-    height: 100vh; 
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    position: fixed;
-    z-index: -1;
-    } 
-  
   .logo{
     color: rgb(219, 219, 219);
     text-transform: uppercase;
@@ -346,6 +336,11 @@
      padding-top: 5%;
   }
 
+  #calendar {
+    width: 200px;
+    height: 20px;
+  }
+
   .logoutButton{
     background-color: transparent;
     border: 0px;
@@ -491,3 +486,4 @@
     padding: 20px;
 
   }
+

@@ -11,14 +11,26 @@
             <h1 class="welcomeText">REGISTER</h1>
             <div class="form-design">
                 <form action = "/auth/register" method="POST" style="background-color:cornflowerblue;padding:10vh">
-                    <input type="name" name="name" placeholder="name" style="font-size:1em;"><br><br>
-                    <input type="text" name="username" placeholder="username" style="font-size:1em;"><br><br>
-                    <input type="password" name="password" placeholder="password" pattern=".{3,}" title="Password must be at least 3 or more characters"  style="font-size:1em;"><br><br>
+                    <input type="name" name="name" placeholder="name" style="font-size:1em;" required><br><br>
+                    <input type="text" name="username" placeholder="username" style="font-size:1em;" required><br><br>
+                    <input type="password" name="password" placeholder="password" pattern=".{3,}" title="Password must be at least 3 or more characters"  style="font-size:1em;" required><br><br>
+                    <input type="text" id="calendar" placeholder="dd/mm/yyyy" style="font-size:1em"> <br><br>
                     <input type="submit" value="REGISTER" style="font-size:1em;height:100%;width:100%;">
                 </form>
             </div>  
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../authpartials/footer") %>
+        <script>
+            $(document).ready(function(){
+                $("#calendar").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "1930:2022",
+                    maxDate: "-18y",
+                    showAnim: "fadeIn"
+                });
+            });
+        </script>
     </body>
 </html>
