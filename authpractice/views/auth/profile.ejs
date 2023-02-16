@@ -8,60 +8,42 @@
         <!-- THE HEADER TAG PARTIAL -->
         <%- include("../partials/header") %>
         <main>
-            <form action="./logout" method="GET">
-                <button type="submit" class="logoutButton" title="Logout">
-                    <img src="/images/logout.png" height="50px" width="50px">
-                </button>
-            </form>
             <% if (profile) { %>
                 <h1 class="welcomeText"><%= profile.username %>'s Profile</h1>
                 <form action="/auth/profile" method="POST" enctype="multipart/form-data">
                     <div class="profile-pic-div">
-                    <img id="photo" src="<%= profile.photo ? profile.photo.toString('utf8') : '/images/defaultpfp.png' %>" onclick="document.querySelector('#file').click()">
-                    <input type="file" id="file" name="photo" required>
-                    <label for="file" id="uploadBtn">Choose Photo</label>
+                        <img id="photo" src="<%= profile.photo ? profile.photo.toString('utf8') : '/images/defaultpfp.png' %>" onclick="document.querySelector('#file').click()">
+                        <input type="file" id="file" name="photo" required>
+                        <label for="file" id="uploadBtn">Choose Photo</label>
                     </div>
                     <br><br>
                     <div class="profile-options">
-                    <label for="sexuality">Sexuality:</label>
-                    <select id="sexuality" name="sexuality" required>
-                        <option value="Heterosexual" <%= profile.sexuality === 'Heterosexual' ? 'selected' : '' %>>Heterosexual</option>
-                        <option value="Homosexual" <%= profile.sexuality === 'Homosexual' ? 'selected' : '' %>>Homosexual</option>
-                        <option value="No-Preference" <%= profile.sexuality === 'No-Preference' ? 'selected' : '' %>>No Preference</option>
-                    </select>
-                    <br><br>
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender" required>
-                        <option value="Male" <%= profile.gender === 'Male' ? 'selected' : '' %>>Male</option>
-                        <option value="Female" <%= profile.gender === 'Female' ? 'selected' : '' %>>Female</option>
-                        <option value="Other" <%= profile.gender === 'Other' ? 'selected' : '' %>>Other</option>
-                    </select>
-                    <br><br>
-                    <label for="bio">Bio:</label>
-                    <textarea id="bio" name="bio" rows="5" cols="30" oninput="limitBio()" required><%= profile.bio %></textarea>
-                    <p id="charCount"><%= profile.charCount %></p>
-                    <br><br>
-                    <input id="submit-profile" type="submit" value="SAVE">
+                        <label for="sexuality">Sexuality:</label>
+                        <select id="sexuality" name="sexuality" required>
+                            <option value="Heterosexual" <%= profile.sexuality === 'Heterosexual' ? 'selected' : '' %>>Heterosexual</option>
+                            <option value="Homosexual" <%= profile.sexuality === 'Homosexual' ? 'selected' : '' %>>Homosexual</option>
+                            <option value="No-Preference" <%= profile.sexuality === 'No-Preference' ? 'selected' : '' %>>No Preference</option>
+                        </select>
+                        <br><br>
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Male" <%= profile.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                            <option value="Female" <%= profile.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                            <option value="Other" <%= profile.gender === 'Other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                        <br><br>
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio" rows="5" cols="30" oninput="limitBio()" required><%= profile.bio %></textarea>
+                        <p id="charCount"><%= profile.charCount %></p>
+                        <br><br>
+                        <input id="submit-profile" type="submit" value="SAVE">
                     </div>
                 </form>
             <% } %>
-            <form>
-                <button type="button" id="settingsButton" onclick="openSettings()" title="Settings">
-                    <img src="/images/settings.png" height="50px" width="50px">
-                </button>
-            </form>
-            <div id="settingsModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeSettings()">&times;</span>
-                    <h2 id="settingsTitle">Settings</h2>
-                    <!-- Add your settings options here -->
-                </div>
-            </div>
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../partials/footer") %>
         <script src="/js/profilepic.js"></script>
-        <script src="/js/settingsButton.js"></script>
         <script>
             function limitBio(){
                 const bio = document.getElementById("bio");
