@@ -44,11 +44,24 @@
                     <input id="submit-profile" type="submit" value="SAVE">
                     </div>
                 </form>
-             <% } %>
+            <% } %>
+            <form>
+                <button type="button" id="settingsButton" onclick="openSettings()" title="Settings">
+                    <img src="/images/settings.png" height="50px" width="50px">
+                </button>
+            </form>
+            <div id="settingsModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeSettings()">&times;</span>
+                    <h2 id="settingsTitle">Settings</h2>
+                    <!-- Add your settings options here -->
+                </div>
+            </div>
         </main>
         <!-- THE FOOTER TAG PARTIAL -->
         <%- include("../partials/footer") %>
         <script src="/js/profilepic.js"></script>
+        <script src="/js/settingsButton.js"></script>
         <script>
             function limitBio(){
                 const bio = document.getElementById("bio");
