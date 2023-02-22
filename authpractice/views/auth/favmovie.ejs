@@ -25,7 +25,7 @@
                     <div class="fav-poster">
                       <img src="<%= favMovie.poster %>" />
                       <div class="delete-fav-container">
-                        <a href="#" class="delete-fav" data-title="<%= favMovie.title %>">X</a>
+                        <a href="#" class="delete-fav" data-title="<%= favMovie.title %>" data-releasedate="<%= favMovie.releaseDate %>">X</a>
                       </div>
                     </div>
                 <% }); %>
@@ -41,10 +41,16 @@
                 event.preventDefault()
                 var movie = $("#movie").val()
                 var result = ""
-                var url = "http://www.omdbapi.com/?apikey="+apikey
+                var url = "http://www.omdbapi.com/?apikey="+ apikey
+                var yearMatch = movie.match(/\((\d{4})\)$/);
+                if (yearMatch) {
+                    movie = movie.replace(yearMatch[0], "").trim();
+                    url += "&y=" + yearMatch[1];
+                }
+                url += "&t=" + movie;
                 $.ajax({
                     method: 'GET',
-                    url: url+"&t="+movie,
+                    url: url,
                     success: function(data){
                         console.log(data)
                         if(data.Response == "False"){
@@ -113,12 +119,12 @@
         })
     </script>
     <script>
-        function deleteFavMovie(title) {
-            console.log("Deleting movie:", title);
+        function deleteFavMovie(title, releaseDate) {
+            console.log("Deleting movie:", title, releaseDate);
             fetch('/auth/delete-fav', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: title })
+                body: JSON.stringify({ title: title, releaseDate: releaseDate })
             })
                 .then(res => {
                     if (res.status === 400) {
@@ -138,7 +144,8 @@
             deleteLink.addEventListener("click", e => {
                 e.preventDefault();
                 const title = deleteLink.dataset.title;
-                deleteFavMovie(title);
+                const releaseDate = deleteLink.dataset.releasedate;
+                deleteFavMovie(title, releaseDate);
             });
         });
     </script>

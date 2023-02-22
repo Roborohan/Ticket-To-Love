@@ -73,7 +73,7 @@ const getProfile = async (req, res) => {
                 username: req.session.user
             });
         } else {
-            photo = profile.photo ? profile.photo.data.toString('base64') : '';
+            photo = profile.photo ? `data:image/${profile.photo.contentType};base64,${profile.photo.data.toString('base64')}` : '';
             contentType = profile.photo ? profile.photo.contentType : '';
             sexuality = profile.sexuality || 'No Preference';
             gender = profile.gender || 'Other';
@@ -116,22 +116,28 @@ const profileSubmit = async (req, res) => {
             });
         }
 
-        if (req.files && req.files.photo) {
-            profile.photo = {
-                data: req.files.photo.data,
-                contentType: req.files.photo.mimetype
-            };
-        }
+        // Set the profile properties based on the request parameters
         profile.sexuality = req.body.sexuality;
         profile.gender = req.body.gender;
         profile.bio = req.body.bio;
+
+        // Save the photo to the profile
+        if (req.file) {
+            profile.photo.data = req.file.buffer;
+            profile.photo.contentType = req.file.mimetype;
+        }
+
         await profile.save();
 
-        res.render('auth/profile')
+        res.redirect('./profile');
     } catch (error) {
-        res.json({ success: false, error: error.message });
+        console.error(error);
+        res.send('Error submitting profile');
     }
 };
+
+
+  
 
 const getMatches = (req,res) => {
     res.render('auth/matches')
@@ -169,7 +175,7 @@ const favMovieSubmit = async (req, res) => {
         }
 
         // Check if the movie is already in the user's favorite list
-        const existingMovie = await FavMovie.findOne({ username: req.session.user, title: title });
+        const existingMovie = await FavMovie.findOne({ username: req.session.user, title: title, releaseDate: releaseDate });
         if (existingMovie) {
             console.log("Movie already added to favorites!");
             return res.status(400).json({ error: "Movie already added to favorites!" });
@@ -200,10 +206,12 @@ const favMovieSubmit = async (req, res) => {
 
 const deleteFavMovie = async (req, res) => {
     try {
-      const { title } = req.body;
+      const { title, releaseDate } = req.body;
+      console.log(title, releaseDate);
       const deletedMovie = await FavMovie.deleteOne({
         username: req.session.user,
-        title: title
+        title: title,
+        releaseDate: releaseDate,
       });
   
       if (deletedMovie.deletedCount === 0) {
@@ -217,9 +225,8 @@ const deleteFavMovie = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: "Failed to delete movie from favorites!" });
     }
-};
-  
-  
+};  
+
 module.exports = {
     getRegister,
     getLogin,

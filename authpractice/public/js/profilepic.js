@@ -2,7 +2,7 @@ const imgDiv = document.querySelector(".profile-pic-div");
 const img = document.querySelector("#photo");
 const file = document.querySelector("#file");
 const uploadBtn = document.querySelector("#uploadBtn");
-const form = document.querySelector("form");
+const form = document.querySelector("#profileForm");
   
 imgDiv.addEventListener("mouseenter", function(){
     uploadBtn.style.display = "block";
@@ -24,9 +24,9 @@ file.addEventListener("change", function(){
 });
 
 form.addEventListener("submit", function(event){
-    event.preventDefault();
     const formData = new FormData();
     formData.append("photo", file.files[0]);
+    formData.append("photoBase64", img.src.split(',')[1]); // add base64 string of the image
     formData.append("username", username);
     formData.append("sexuality", document.querySelector("#sexuality").value);
     formData.append("gender", document.querySelector("#gender").value);
@@ -45,4 +45,3 @@ form.addEventListener("submit", function(event){
         // handle the error
     });
 }.bind(this, username));
-
