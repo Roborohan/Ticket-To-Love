@@ -1,0 +1,81 @@
+{% extends "users/base.html" %}
+{% block title %}Profile Page{% endblock title %}
+{% block content %}
+    <h1>My Profile</h1>
+    <div class="row my-3 p-3">
+        <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }} " style="cursor: pointer;"/>
+    </div>
+    <div><p><a href="{% url 'password_change' %}">Change Password</a></p></div>
+    {% if user_form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for key, value in user_form.errors.items %}
+                    <strong>{{ value }}</strong>
+                {% endfor %}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    {% if profile_form.errors %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <div id="form_errors">
+            {% for key, value in profile_form.errors.items %}
+                <strong>{{ value }}</strong>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    <div class="form-content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                  <!-- content for the left half of the row -->
+                  <div class="form-group">
+                    <label class="small mb-1">Username:</label>
+                        {{ user_form.username }}
+                    <label class="small mb-1">Email:</label>
+                        {{ user_form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
+                    </div>
+                  
+
+                </div>
+                <div class="col-sm-6">
+                  <!-- content for the right half of the row -->
+                  <div class="form-group">
+                    <label class="small mb-1">Date of Birth:</label>
+                        {{ profile_form.date_of_birth }}
+                    
+                    </div>
+                    <div class="form-group">
+                        
+                        <label class="small mb-1">Gender:</label>
+                            {{ profile_form.gender }}
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label class="small mb-1">Sexuality:</label>
+                            {{ profile_form.sexuality }}
+                    </div>
+                    <div class="form-group">                      
+                        <label class="small mb-1">Change Avatar:</label>
+                        {{ profile_form.avatar }}
+                    </div>
+                </div>
+              </div>
+           
+            <br><br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <!--<button type="reset" class="btn btn-dark btn-lg">Reset</button>-->
+        </form>
+    </div>
+{% endblock content %}

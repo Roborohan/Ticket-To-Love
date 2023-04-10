@@ -1,0 +1,36 @@
+{% extends "users/base.html" %}
+{% block title %} Home Page {% endblock title%}
+{% block content %}
+<style>
+    .banner {
+        background-image: url(/media/banner.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 200px; /* adjust the height as needed */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff; /* add a text color that contrasts with banner image */
+        font-size: 32px; /* adjust the font size as needed */
+        text-shadow: 2px 2px #000; /* add a shadow to improve legibility */
+    }
+</style>
+	<!-- Add banner here -->
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{user.first_name.title|default:'Guest'}}</h1>
+        <p class="lead">
+            We are a dating app that uses advanced machine learning algorithms to match you with people who share your taste in movies. Register today and find your soulmate!
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'users-register' %}" role="button">Sign Up</a>
+            {% endif %}
+        </p>
+    </div>
+
+{% endblock content %}

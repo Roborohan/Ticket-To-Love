@@ -1,0 +1,137 @@
+{% extends 'users/base.html' %}
+{% block title %} Search {% endblock title%}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-md-10 offset-md-1">
+                        <p>Search for your favourite movies. Pick up to 10.</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <input type="text" class="form-control
+                                    rounded-pill" name="query" id="query" value="{{ request.POST.query }}"
+                                    placeholder="Movie Title" aria-label="Search"
+                                    aria-describedby="btn_search" required>
+                            </div>
+
+                            
+                            <input type="number" class="form-control rounded-pill"
+                                name="year" id="year" placeholder="Year" value="{{ request.POST.year }}"
+                                aria-label="Search" pattern="[0-9]{4}"
+                                aria-describedby="btn_search">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary
+                                    rounded-pill" type="button"
+                                    name="btn_search" id="btn_search"><i
+                                        class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .container {
+  padding-top: 50px;
+}
+
+.input-group {
+  border: none;
+  box-shadow: none;
+}
+
+.input-group .form-control {
+  border: none;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  padding: 15px;
+  font-size: 18px;
+}
+
+.input-group-append .btn {
+  border: none;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  padding: 15px;
+  font-size: 18px;
+  color: #666666;
+}
+
+.input-group-append .btn:hover {
+  color: #000;
+}
+
+.input-group-append .btn i {
+  font-size: 20px;
+}
+
+</style>
+ 
+
+<div class="container">
+   
+    {% if search_results %}
+    <p class="text-center mb-4">Results</p>
+    <hr>
+    <ul class="list-group">
+        {% for movie in search_results %}
+      <li class="list-group-item">
+        <form method="post" action="{% url 'myapp:favourite_movies' %}" >
+            {% csrf_token %}
+            <input type="hidden" name="movie_title" value="{{ movie.Title }}">
+            <input type="hidden" name="movie_id" value="{{ movie.imdbID }}">
+            <input type="hidden" name="genre" value="{{ movie.Genre }}">
+            <input type="hidden" id="director" name="director" value="{{ movie.Director }}">
+            <input type="hidden" id="actors" name="actors" value="{{ movie.Actors }}">
+            <input type="hidden" id="release_date" name="release_date" value="{{ movie.Released }}">
+            <input type="hidden" id="country" name="country" value="{{ movie.Country }}">
+            <input type="hidden" id="poster" name="poster" value="{{ movie.Poster }}">
+            <input type="hidden" id="year" name="year" value="{{ movie.Year }}">
+       
+        <div class="row">
+        
+          <div class="col-md-4">
+            <img src="{{ movie.Poster }}" alt="{{ movie.Title }} poster">
+          </div>
+          <div class="col-md-8">
+            <h2 class="mb-4">{{ movie.Title }}</h2>
+            <p class="mb-1"><strong>Year: </strong>{{ movie.Year }}</p>
+            <p class="mb-1"><strong>Rated: </strong> {{ movie.Rated }}</p>
+            <p class="mb-1"><strong>Released: </strong>{{ movie.Released }}</p>
+            <p class="mb-1"><strong>Runtime: </strong> {{ movie.Runtime }}</p>
+            <p class="mb-1"><strong>Genre: </strong>{{ movie.Genre }}</p>
+            <p class="mb-1"><strong>Director: </strong>{{ movie.Director }}</p>
+            <p class="mb-1"><strong>Writer: </strong>{{ movie.Writer }}</p>
+            <p class="mb-1"><strong>Actors: </strong>{{ movie.Actors }}</p>
+           
+            <p class="mb-1"><strong>Language: </strong>{{ movie.Language }}</p>
+            <p class="mb-1"><strong>Country: </strong>{{ movie.Country }}</p>
+            <p class="mb-1"><strong>Awards: </strong>{{ movie.Awards }}</p>
+            <p class="mb-1"><strong>Plot: </strong>{{ movie.Plot }}</p>
+            <p class="mb-1"><strong>imdbID: </strong>{{ movie.imdbID }}</p>
+           
+            {% if movie.is_favourite %} 
+            <button type="submit" name="action" value="remove" class="btn btn-warning">Remove from
+                Favourites</button>
+            {% elif movie_ids|length >= 10 %}
+            <button type="submit" name="action" class="btn btn-primary" value="add" disabled>Add to
+                Favourites</button>
+            {% else %}
+            <button type="submit" name="action" class="btn btn-primary" value="add">Add to Favourites</button>
+            {% endif %}
+          </div>
+        </div>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+ 
+{% endblock %}

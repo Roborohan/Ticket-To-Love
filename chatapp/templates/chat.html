@@ -1,0 +1,96 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center btn-primary" style="margin: 20px;">
+    <h5>Chat with {{ recipient.first_name }} {{ recipient.last_name }}</h5>
+  </div>
+  <style>
+    div.scroll {
+      
+      height: 100px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      
+    }
+  </style>
+  <div class="row">
+    
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <div class="message-list scroll" >
+            {% for msg_chat in messages_chat %}
+           
+            {% if msg_chat.sender == user.id %}
+            <div class="message-item right">
+              <div class="message-content">
+                <p>{{ msg_chat.content }}</p>
+                <div class="message-meta chatroom-container">
+                  <span class="message-time">{{ message.sent_at|date:"F j, Y, g:i a" }}</span>
+                  {% if msg_chat.status == 'sent' %}
+                  <span class="message-status"><i class="fas fa-check"></i></span>
+                  {% elif msg_chat.status == 'delivered' %}
+                  <span class="message-status"><i class="fas fa-check-double"></i></span>
+                  {% elif msg_chat.status == 'read' %}
+                  <span class="message-status"><i class="fas fa-check-double"></i></span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="message-item left">
+              <div class="message-content">
+                <p>{{ msg_chat.content }} </p>
+                <div class="message-meta">
+                  <span class="message-time">{{ msg_chat.sent_at|date:"F j, Y, g:i a" }}</span>
+                  {% if msg_chat.status == 'sent' %}
+                  <span class="message-status"><i class="fas fa-check"></i></span>
+                  {% elif msg_chat.status == 'delivered' %}
+                  <span class="message-status"><i class="fas fa-check-double"></i></span>
+                  {% elif msg_chat.status == 'read' %}
+                  <span class="message-status"><i class="fas fa-check-double"></i></span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% empty %}
+            <p>No messages yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    
+         <form id="message-form" method="POST" action="{% url 'chatapp:send_message' recipient_id=recipient.id  %}">
+        {% csrf_token %}
+        <input type="hidden" value="{{ recipient.id }}" name="recipient_id" id="recipient_id">
+        <div class="form-group">
+          <label for="message-content">Message</label>
+          <textarea class="form-control" id="message-content" name="content" rows="2" placeholder="Type your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary"> Send </button>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"> Match Info</h5>
+          <p class="card-text">Name: {{ recipient.first_name }} {{ recipient.last_name }}</p>
+          <p class="card-text">Gender: {{ recipient.profile.gender }}</p>
+          <p class="card-text">Sexuality: {{ recipient.profile.sexuality }}</p>
+          <p class="card-text">Favourite Movies: <a href="{% url 'myapp:friend_favourite_movies' friend_id=recipient.id %}">show</a> </p>
+          <p class="card-text">Bio: {{ recipient.profile.bio }}</p>
+          <!-- <ul class="list-unstyled">
+            
+            {% for movie in recipient.favouritemovie_set.all %}
+            <li>{{ movie.title }}</li>
+            {% endfor %}
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

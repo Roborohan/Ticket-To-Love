@@ -1,0 +1,58 @@
+{% extends "users/base.html" %}
+{% block title %} Contact {% endblock title%}
+{% block content %}
+<style>
+    .contact-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 50px 0;
+    }
+    .contact-info div {
+        flex: 1 1 300px;
+        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    }
+    .contact-info h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .contact-info p {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+</style>
+<div class="form-content my-3 p-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Contact Us</h1>
+            <!-- Add page content here -->
+
+        </div>
+    </div>
+</div>
+<div class="contact-info">
+    <div>
+        <h2>Address</h2>
+        <p>Edgbaston, Birmingham</p>
+        <p>B15 2TT</p>
+    </div>
+    <div>
+        <h2>Phone</h2>
+        <p>UK: +44 1234567890</p>
+        <p>US: (555) 010-1234</p>
+    </div>
+    <div>
+        <h2>Email</h2>
+        <p>info@tickettolove.com</p>
+        <p>support@tickettolove.com</p>
+    </div>
+</div>
+ 
+{% endblock content %}

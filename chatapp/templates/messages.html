@@ -1,0 +1,18 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<h1>Messages</h1>
+{% for conversation in conversations %}
+<div class="conversation">
+    {{ conversations }}
+    <a href="{% url 'chat' conversation.recipient.id %}">
+        <img src="{{ conversation.recipient.profile_pic.url }}" alt="{{ conversation.recipient.first_name }}" class="img-thumbnail">
+        <h5>{{ conversation.recipient.first_name }} {{ conversation.recipient.last_name }}</h5>
+        <p>{{ conversation.latest_message.content|truncatechars:50 }}</p>
+        <p class="text-muted">{{ conversation.latest_message.timestamp|naturaltime }}</p>
+    </a>
+</div>
+{% empty %}
+<p>No conversations yet.</p>
+{% endfor %}
+{% endblock %}

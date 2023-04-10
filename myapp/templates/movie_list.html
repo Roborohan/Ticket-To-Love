@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %}
+{% block title %} database movie list {% endblock title%}
+{% block content %}
+<div class="container">
+    <p class="text-center mb-4">Database Movie List({{ count }})</p>
+    {% if movie_list %}
+    
+    <ul class="list-group">
+        {% for movie in movie_list %}
+      <li class="list-group-item">
+       
+        <div class="row">
+        
+          <div class="col-md-4">
+            <img src="{{ movie.poster }}" alt="{{ movie.title }} poster">
+          </div>
+          <div class="col-md-8">
+            <h2 class="mb-4">{{ movie.title }}</h2>
+            <p class="mb-1"><strong>Genre: </strong>{{ movie.genre }}</p>
+            <p class="mb-1"><strong>Director: </strong>{{ movie.director }}</p>
+            <p class="mb-1"><strong>Actors: </strong>{{ movie.actors }}</p> 
+            <p class="mb-1"><strong>Released: </strong>{{ movie.release_date }}</p> 
+            <p class="mb-1"><strong>Country: </strong>{{ movie.country }}</p>
+            <p class="mb-1"><strong>Year: </strong>{{ movie.year }}</p>
+            <p class="mb-1"><strong>imdbID: </strong>{{ movie.id }}</p>
+            {% if movie.is_favourite %} 
+            <a href="{% url 'myapp:un_favourite' movie_id=movie.id %}" class="btn btn-warning">Remove from Favourites </a>
+           
+            {% else %} 
+            <a href="{% url 'myapp:add_favourite' movie_id=movie.id %}" class="btn btn-primary">Add To Favourite </a>
+            {% endif %}
+            <!-- <form method="post" action="{% url 'myapp:favourite_movies' %}">
+              {% csrf_token %}              
+              <input type="hidden" name="movie_id" value="{{ movie.id }}">
+              {% if movie.is_favourite %} 
+              <button type="submit" name="action" value="remove" class="btn btn-warning">Remove from
+                Favourites</button>        
+                           
+              {% else %}                 
+              <button type="submit" name="action" class="btn btn-primary" value="add" disabled>Add to
+                Favourites</button>            
+              {% endif %}
+            </form> -->
+          </div>
+        </div>
+        
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+ 
+{% endblock %}

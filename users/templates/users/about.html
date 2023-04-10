@@ -1,0 +1,22 @@
+{% extends "users/base.html" %}
+{% block title %} About Us {% endblock title%}
+{% block content %}
+    <div class="form-content my-3 p-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>About Us</h1><br>
+                    <h2>Why Choose Ticket To Love?</h2><br>
+                    <p>Are you tired of swiping left and right with no luck in finding your perfect match? Ticket To Love is here to help. Our unique matchmaking algorithm uses artificial intelligence to find you matches based on your shared love for films. No more endless scrolling through profiles that don't interest you. With Ticket to Love, you can be confident that you will be matched with people who share your same interests and passions.</p>
+                    <h2>What is Ticket To Love All About?</h2><br>
+                    <p>Ticket To Love is a dating website for film lovers. Our mission is to bring people together who share a love for movies and help them find meaningful connections with others. Whether you're a fan of action, romance, or comedy, we believe that there's someone out there for you who shares your same taste in films. With Ticket To Love, finding your match has never been easier.</p><br>
+                    <h2>How Does Ticket To Love Work?</h2>
+                    <p>We calculate a score based on how similar your taste is to others. The higher the score, the better the match. It's as simple as that!</p><br>
+                    <p>
+                        So what are you waiting for? <a href="{% url 'users-register' %}">Sign Up </a>Now!
+                    </p>
+                </div>               
+            </div>
+        </div>
+    </div>
+{% endblock content %}

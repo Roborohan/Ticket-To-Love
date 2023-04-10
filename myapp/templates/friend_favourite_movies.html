@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+{% block title %} favourite movie {% endblock title%}
+{% block content %}
+
+<h2>Match's Favourite Movies</h2>
+
+{% if favourite_movies %}
+    <ul class="list-group">
+    {% for favourite_movie in favourite_movies %}
+        <li class="list-group-item">
+            <!-- <p>user id: {{ favourite_movie.user.id }}</p> -->
+             
+            <h4>{{ favourite_movie.movie.title }}</h4>    
+       
+            <p>{{ favourite_movie.movie.release_date }} | {{ favourite_movie.movie.genre }}</p>
+            <img src="{{ favourite_movie.movie.poster }}" alt="{{ favourite_movie.movie.title }}" height="200px">
+         
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have not added any favourite movies yet.</p>
+{% endif %}
+{% endblock %}

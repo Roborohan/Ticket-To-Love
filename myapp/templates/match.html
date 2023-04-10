@@ -1,0 +1,29 @@
+{% extends 'users/base.html' %}
+{% block title %} matching profile {% endblock title%}
+{% block content %}
+
+{% if algo_matches %}
+    <h1>My Matches ({{algo_matches|length}})</h1>
+    <div class="row">
+        {% for friend_match in algo_matches %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="{{ friend_match.user.profile.avatar.url }}" alt="{{ friend_match.user.last_name }} profile image" height="250px" width="150px">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: {{ friend_match.user.first_name }} {{ friend_match.user.last_name }}</h5>
+                        <p>Gender: {{ friend_match.user.profile.gender }}</p>
+                        <p>Sexuality: {{ friend_match.user.profile.sexuality }}</p>
+                        <p>Date of Birth: {{ friend_match.user.profile.date_of_birth }}</p>
+                        <p>Bio: {{ friend_match.user.profile.bio }}</p>
+                        <p>Score: {{ friend_match.score }}</p>
+                        <a href="{% url 'chatapp:chat' recipient_id=friend_match.user.id %}"  class="btn btn-info">Chat</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <h1>You have no matches based on your profile. To improve your profile, add movies to your favourites.</h1>
+{% endif %}
+
+{% endblock %}
