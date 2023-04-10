@@ -2,7 +2,7 @@ To get this project up and running locally on your computer follow the following
 1. Change directory to the rxs116 folder
 
 2. Set up a python virtual environment and activate it (optional):
-    * To intialise, run: python3 -m venv venv
+    * To initialise, run: python3 -m venv venv
     * To activate:
         * on Windows run: venv/Scripts/activate
         * on Mac/Linux run: source venv/bin/activate
