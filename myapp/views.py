@@ -103,7 +103,7 @@ def favourite_movies(request):
                 try:
                     movie.save()
                     # Save the object to the database
-                    messages.add_message(request, messages.INFO, 'Movie New Added.')
+                    messages.add_message(request, messages.INFO, 'New Movie Added.')
                 except Exception as error_message:
                     messages.add_message(request, messages.INFO, error_message)
 
@@ -111,7 +111,7 @@ def favourite_movies(request):
             else:
                 movie= get_object_or_404(Movie, id=movie_id)
             if request.user.favouritemovie_set.count() >= 10:
-                messages.add_message(request, messages.INFO, 'Limit Access , 10 Movies ')
+                messages.add_message(request, messages.INFO, 'You Can Only Add 10 Movies!')
                 return redirect('myapp:home')
             try:
                 FavouriteMovie.objects.create(user=request.user, movie=movie)
@@ -154,7 +154,7 @@ def add_favourite(request,movie_id):
     movie_id = request.POST.get('movie_id')
     movie= get_object_or_404(Movie, id=movie_id)
     FavouriteMovie.objects.create(user=request.user, movie=movie)
-    messages.add_message(request, messages.INFO, 'In Favourite Added')
+    messages.add_message(request, messages.INFO, 'Favourite Added')
     return redirect('myapp:show_fav_movie')
  
 @login_required
@@ -164,7 +164,7 @@ def make_favourite(request):
         movie= get_object_or_404(Movie, id=movie_id)
         user = get_object_or_404(User, id=request.user.id)      
         favourite_movie = FavouriteMovie.objects.create(user=user, movie=movie)
-        messages.add_message(request, messages.INFO, 'In Favourite Added')
+        messages.add_message(request, messages.INFO, 'Favourite Added')
     return redirect('myapp:movie_list')
  
 @login_required

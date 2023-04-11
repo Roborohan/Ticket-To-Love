@@ -11,45 +11,115 @@ from django.db.models import Q
 def filter_users(user_id):
     matched_profiles = []
     user_profile = User.objects.get(pk=user_id).profile
+
     if user_profile.sexuality == 'H':
         if user_profile.gender == 'M':
             gender = 'F'
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='H') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N')
+            ).exclude(user=user_profile.user)
         elif user_profile.gender == 'F':
             gender = 'M'
-        else:
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='H') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gendr == 'O':
             gender = 'O'
-        matched_profiles = Profile.objects.filter(
-            Q(gender=gender, sexuality__in=['H', 'B']) |
-            Q(gender=user_profile.gender, sexuality='N')
-        ).exclude(user=user_profile.user)
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='H') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='G') |
+                Q(gender=gender, sexuality='N')
+            ).exclude(user=user_profile.user)
+
     elif user_profile.sexuality == 'G':
-        matched_profiles = Profile.objects.filter(
-            Q(gender=user_profile.gender, sexuality__in=['G', 'B']) |
-            Q(sexuality='N')
-        ).exclude(user=user_profile.user)
+        if user_profile.gender == 'M':
+            gender = 'M'
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='G') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gender == 'F':
+            gender = 'F'
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='G') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gender == 'O':
+            gender = 'O'
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='G') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N') |
+                Q(gender=gender, sexuality='H')
+            ).exclude(user=user_profile.user)
+
     elif user_profile.sexuality == 'B':
         if user_profile.gender == 'M':
-            gender = 'F'
-            opp_gender = 'M'
+            matched_profiles = Profile.objects.filter(
+                Q(gender='F', sexuality='H') |
+                Q(gender='F', sexuality='B') |
+                Q(gender='F', sexuality='N') |
+                Q(gender='M', sexuality='B') |
+                Q(gender='M', sexuality='G') |
+                Q(gender='M', sexuality='N')
+            ).exclude(user=user_profile.user)
         elif user_profile.gender == 'F':
-            gender = 'M'
-            opp_gender = 'F'
-        else:
+            matched_profiles = Profile.objects.filter(
+                Q(gender='M', sexuality='H') |
+                Q(gender='M', sexuality='B') |
+                Q(gender='M', sexuality='N') |
+                Q(gender='F', sexuality='B') |
+                Q(gender='F', sexuality='G') |
+                Q(gender='F', sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gender == 'O':
             gender = 'O'
-            opp_gender = 'O'
-        matched_profiles = Profile.objects.filter(
-            Q(gender=gender, sexuality__in=['H', 'G', 'B']) |
-            Q(gender=opp_gender, sexuality__in=['G', 'B']) |
-            Q(sexuality='N')
-        ).exclude(user=user_profile.user)
+            matched_profiles = Profile.objects.filter(
+                Q(gender=gender, sexuality='G') |
+                Q(gender=gender, sexuality='B') |
+                Q(gender=gender, sexuality='N') |
+                Q(gender=gender, sexuality='H')
+            ).exclude(user=user_profile.user)
+
     elif user_profile.sexuality == 'N':
-        matched_profiles = Profile.objects.filter(
-            Q(sexuality__in=['H', 'G', 'B', 'N']) |
-            Q(gender=user_profile.gender, sexuality='B') |
-            Q(gender=user_profile.gender, sexuality=user_profile.sexuality)
-        ).exclude(user=user_profile.user)
+        if user_profile.gender == 'M':
+            matched_profiles = Profile.objects.filter(
+                Q(gender='F', sexuality='B') |
+                Q(gender='F', sexuality='N') |
+                Q(gender='M', sexuality='B') |
+                Q(gender='M', sexuality='G') |
+                Q(gender='M', sexuality='N') |
+                Q(gender='O', sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gender == 'F':
+            matched_profiles = Profile.objects.filter(
+                Q(gender='F', sexuality='B') |
+                Q(gender='F', sexuality='G') |
+                Q(gender='F', sexuality='N') |
+                Q(gender='M', sexuality='B') |
+                Q(gender='M', sexuality='N') |
+                Q(gender='O', sexuality='N')
+            ).exclude(user=user_profile.user)
+        elif user_profile.gender == 'O':
+            matched_profiles = Profile.objects.filter(
+                Q(gender='O', sexuality='H') |
+                Q(gender='O', sexuality='G') |
+                Q(gender='O', sexuality='B') |
+                Q(gender='O', sexuality='N') |
+                Q(gender='M', sexuality='N') |
+                Q(gender='F', sexuality='N')
+            ).exclude(user=user_profile.user)
 
     return matched_profiles
+
+
 
 
 
@@ -142,10 +212,10 @@ def match_users_cosine(c_user_id):
 
         print(f"Weighted sum for user {user_id}: {weighted_sum}")
 
-        match_score = weighted_sum * size_factor
+        match_score = weighted_sum * size_factor  #normalisation for accounts with different numbers of movies
         print(f"Match score for user {user_id}: {match_score}")
 
-        if match_score > 1.1:
+        if match_score > 2: #threshold to display user matches
             matches.append({'user': user, 'score': round(match_score, 2)})
 
     return matches

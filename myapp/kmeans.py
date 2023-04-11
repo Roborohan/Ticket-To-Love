@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+'''from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.conf import settings
@@ -121,5 +121,5 @@ def matches(request):
     matches = sorted(matches, key=lambda x: x['score'], reverse=True)
 
     return render(request, 'matches.html', {'matches': matches})
-
+'''
 

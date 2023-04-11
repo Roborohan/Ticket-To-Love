@@ -1,3 +1,4 @@
+'''
 from sklearn.metrics.pairwise import cosine_similarity
 from numpy import mean
 from sklearn.preprocessing import OneHotEncoder
@@ -84,3 +85,4 @@ def match_users_cosine(c_user_id):
             matches.append({'user': user, 'score': match_score})
 
     return matches
+'''
