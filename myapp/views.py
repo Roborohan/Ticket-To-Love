@@ -1,4 +1,5 @@
 import datetime
+import os
 from django.db import IntegrityError
 
 from django.views import View
@@ -11,11 +12,13 @@ from .models import Movie, FavouriteMovie
 from myapp.matching_second import *
 
 from django.contrib.auth.models import User
+
+OMDB_API_KEY = os.environ.get('OMDB_API_KEY', '')
 # Create views here.
 def home(request):
     return render(request, 'users/home.html')
 
-# https://www.omdbapi.com/?apikey=REDACTED_API_KEY&t=titanic&y=1997
+# https://www.omdbapi.com/?apikey={OMDB_API_KEY}&t=titanic&y=1997
 
 @login_required
 def search_movies(request):
@@ -25,9 +28,9 @@ def search_movies(request):
         if query is None:
             return render(request, 'search_movies.html')
         if year:
-            url = f'https://www.omdbapi.com/?apikey=REDACTED_API_KEY&s={query}&y={year}'
+            url = f'https://www.omdbapi.com/?apikey={OMDB_API_KEY}&s={query}&y={year}'
         else:
-            url = f'https://www.omdbapi.com/?apikey=REDACTED_API_KEY&s={query}'
+            url = f'https://www.omdbapi.com/?apikey={OMDB_API_KEY}&s={query}'
         response = requests.get(url)
         data = response.json()
         
@@ -40,7 +43,7 @@ def search_movies(request):
             for s_item in search_results:
                 if s_item['imdbID']:
                     item_id=s_item['imdbID']
-                    url_item = f'https://www.omdbapi.com/?apikey=REDACTED_API_KEY&i={item_id}'
+                    url_item = f'https://www.omdbapi.com/?apikey={OMDB_API_KEY}&i={item_id}'
                     item_details_response = requests.get(url_item)
                     
                     item_data = item_details_response.json()

@@ -2,7 +2,7 @@ from django.test import TestCase
 
 # Create tests here.
 from django.test import TestCase
-from myapp.matching_algorithm import match_users_cosine
+from myapp.matching_second import match_users_cosine
 from django.contrib.auth.models import User
 class MatchingAlgorithmTestCase(TestCase):
     def test_match_users_cosine(self):
